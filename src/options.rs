@@ -6,12 +6,13 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode}, 
 };
 
+const POKE_OPTS: [&str; 3] = ["Charmander", "Bulbasaur", "Squirtle"];
+
 pub fn choose_pokemon_by_number() {
     let mut stdout = stdout();
-    let opts = ["Charmander", "Bulbasaur", "Squirtle"];
 
     queue!(stdout, style::Print("Select your pokemon")).expect("Bad queueing");
-    for (i, opt) in opts.iter().enumerate() {
+    for (i, opt) in POKE_OPTS.iter().enumerate() {
         queue!(stdout, style::Print(format!("\n{}: {}", i + 1, opt))).expect("Bad queueing");
     }
     queue!(stdout, style::Print("\n")).expect("Bad queueing");
@@ -22,7 +23,7 @@ pub fn choose_pokemon_by_number() {
     let i = handle_usr_input().expect("Bad user input");
     let i = i as usize;
 
-    queue!(stdout, style::Print(format!("You selected: {}", opts[i - 1]))).expect("Bad queueing");
+    queue!(stdout, style::Print(format!("You selected: {}", POKE_OPTS[i - 1]))).expect("Bad queueing");
 }
 
 fn handle_usr_input() -> Result<u8, Error>  {
